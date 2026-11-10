@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/publicar-prew.yml"
+      - "public/**"
   workflow_dispatch:
 
 permissions:

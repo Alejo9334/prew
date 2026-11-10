@@ -141,7 +141,7 @@ dialog{background:#092b42!important;color:#eafdff!important;border-color:#5aadc9
 <button class="subtle" id="export">Descargar proyecto JSON</button>
 <button class="subtle" id="shareAR">Vista AR en mi celular · QR</button>
 <button id="tryAR">Probar en cámara AR</button>
-<button id="updatePublished" class="subtle" type="button">↻ Actualizar experiencia publicada</button>
+<button id="updatePublished" type="button" title="Guardar el borrador y preparar la actualización del visor del cliente">↻ Actualizar visor del cliente</button>
 <button id="publishSelected" class="subtle" type="button">Preparar publicación en GitHub</button>
 </div>
 </header>
@@ -184,7 +184,7 @@ dialog{background:#092b42!important;color:#eafdff!important;border-color:#5aadc9
 <div class="controls"><button id="applyPreset" type="button" class="subtle">Aplicar</button><button id="deletePreset" type="button" class="danger">Eliminar</button></div>
 <p class="muted">Los presets guardan profundidad, transformaciones, sombras, animaciones y parallax. Puedes reutilizarlos en este cuadro.</p>
 <div class="group-label">Proyecto guardado</div>
-<div class="controls"><button class="subtle" id="save">Guardar borrador local</button><button class="subtle" id="importButton">Importar JSON</button></div>
+<div class="controls"><button class="subtle" id="save">Guardar borrador local</button><button id="quickUpdate" type="button" title="Preparar actualización del cuadro para los clientes">↻ Actualizar visor</button><button class="subtle" id="importButton">Importar JSON</button></div>
 <div class="group-label">Edición local · Sin inicio de sesión</div>
 <p class="muted">Los cambios se guardan únicamente en este navegador. Descarga el JSON para hacer una copia de seguridad. Publicar imágenes requiere confirmar el archivo en tu cuenta de GitHub.</p>
 <div class="controls"><button id="publishSidebar" class="subtle" type="button">Preparar cuadro seleccionado para GitHub</button></div><p class="muted">Primero crea un cuadro con «+ Nuevo cuadro», personaliza sus capas y prepara su publicación desde aquí.</p>
@@ -843,11 +843,13 @@ dialog{background:#092b42!important;color:#eafdff!important;border-color:#5aadc9
 
   // Actualiza solo una experiencia publicada, sin credenciales privadas en el navegador.
   $('updatePublished').addEventListener('click',function(){
+    persistQuiet();
     if(!article()){note('Selecciona primero un cuadro.');return;}
     $('updateReady').hidden=true;
     $('updateStatus').textContent='Experiencia seleccionada: '+article().nombre+'.';
     $('updateDialog').showModal();
   });
+  $('quickUpdate').addEventListener('click',function(){$('updatePublished').click();});
   $('closeUpdate').addEventListener('click',function(){$('updateDialog').close();});
   $('downloadUpdate').addEventListener('click',async function(){
     var button=this;
